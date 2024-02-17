@@ -15,7 +15,7 @@ export default function Home() {
       <NavBar />
       <SimpleGrid columns={{ base: 1, md: 2 }} gap={5} >
         <Container pr={20} textAlign='left' maxW='550px'>
-          <Heading fontSize='65px' py={10} >👋Hey there, It's Carl Friday.</Heading>
+          <Heading fontSize='65px' py={10} >👋Hey there, Its Carl Friday.</Heading>
           <Text>Lorem ipsum dolor sit amet, consectetur</Text>
           <Text>adipiscing elit,sed do eiusmod tempor</Text>
           <Text>incididunt ut labore et dolore.</Text>

@@ -32,7 +32,7 @@ const NavBar = () => {
                     <Link href='#footer'>
                         <Button variant="ghost" _hover={{ bg: 'gray.600' }}>
                             Contact
-                        </Button>
+                        </Button>[]
                     </Link>
                     <IconButton
                         aria-label="Toggle dark mode"
