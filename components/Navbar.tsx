@@ -1,15 +1,22 @@
-import { Box, Flex, HStack, IconButton, useColorMode, Link, Text, Button } from "@chakra-ui/react";
+'use client'
+import { Box, Flex, HStack, IconButton, useColorMode, Link, Text, Button, VStack } from "@chakra-ui/react";
 import { TbSun } from "react-icons/tb";
 import { TbMoon } from "react-icons/tb";
 import NextLink from 'next/link'
+import { useWallet } from '@xircus-web3/react'
+import { useEffect } from 'react'
 
-
-const NavBar = () => {
+const Navbar = () => {
     const { colorMode, toggleColorMode } = useColorMode();
-
+    const wallet = useWallet()
+    useEffect(() => {
+        if (wallet.status !== "connected") {
+            wallet.connectMetamask();
+        }
+    }, [wallet]);
     return (
         <Box>
-            <Flex px={10} py={4} gap={4} justifyContent='space-between' mb={3} flexDirection={{ base: 'column', md: 'row' }}>
+            <Flex boxShadow="md" px={4} me={4} justifyContent='space-between' mb={3} flexDirection={{ base: 'column', md: 'row' }}>
                 <HStack>
                     <Text as='b' ml={20}>carl.dev</Text>
                 </HStack>
@@ -19,31 +26,38 @@ const NavBar = () => {
                             Home
                         </Button>
                     </NextLink>
-                    <Link href='#about'>
+                    <NextLink href='#about' passHref>
                         <Button variant="ghost" _hover={{ bg: 'gray.600' }}>
                             About
                         </Button>
-                    </Link>
-                    <Link href='#services'>
+                    </NextLink>
+                    <NextLink href='#services' passHref>
                         <Button variant="ghost" _hover={{ bg: 'gray.600' }}>
                             Services
                         </Button>
-                    </Link>
-                    <Link href='#footer'>
+                    </NextLink>
+                    <NextLink href='#footer' passHref>
                         <Button variant="ghost" _hover={{ bg: 'gray.600' }}>
                             Contact
                         </Button>
-                    </Link>
-                    <IconButton
-                        aria-label="Toggle dark mode"
-                        icon={
-                            <Box as="span" fontSize="xl">
-                                {colorMode === "dark" ? <TbSun />
-                                    : <TbMoon />}
-                            </Box>
-                        }
-                        onClick={toggleColorMode}
-                    />
+                    </NextLink>
+                    <VStack>
+                        <Button onClick={wallet.connectMetamask}>Connect To Metamask</Button>
+                        <Text> {wallet.status == 'connected' && wallet.account}</Text>
+                    </VStack>
+                    <VStack>
+                        <IconButton
+                            aria-label="Toggle dark mode"
+                            icon={
+                                <Box as="span" fontSize="xl">
+                                    {colorMode === "dark" ? <TbSun />
+                                        : <TbMoon />}
+                                </Box>
+                            }
+                            onClick={toggleColorMode}
+                        />
+                    </VStack>
+
                     {/* <Box id="home"></Box>
                     <Box id="about"></Box>
                     <Box id="services"></Box>
@@ -55,4 +69,4 @@ const NavBar = () => {
     );
 };
 
-export default NavBar;
+export default Navbar;
