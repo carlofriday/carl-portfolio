@@ -3,19 +3,20 @@ import { Box, Flex, HStack, IconButton, useColorMode, Link, Text, Button, VStack
 import { TbSun } from "react-icons/tb";
 import { TbMoon } from "react-icons/tb";
 import NextLink from 'next/link'
-import { useWallet } from '@xircus-web3/react'
 import { useEffect } from 'react'
+import { useWallet } from "@xircus-web3/ton-react";
+
 
 const Navbar = () => {
     const { colorMode, toggleColorMode } = useColorMode();
-    const wallet = useWallet()
+    const wallet = useWallet();
     useEffect(() => {
-        if (wallet.status !== "connected") {
-            wallet.connectMetamask();
+        if (wallet.status != wallet.CONNECTED) {
+            wallet.connect();
         }
     }, [wallet]);
     return (
-        <Box>
+        <Box px={4} me={4}>
             <Flex boxShadow="md" px={4} me={4} justifyContent='space-between' mb={3} flexDirection={{ base: 'column', md: 'row' }}>
                 <HStack>
                     <Text as='b' ml={20}>carl.dev</Text>
@@ -42,8 +43,12 @@ const Navbar = () => {
                         </Button>
                     </NextLink>
                     <VStack>
-                        <Button onClick={wallet.connectMetamask}>Connect To Metamask</Button>
-                        <Text> {wallet.status == 'connected' && wallet.account}</Text>
+                        {wallet.status}
+                        {wallet.status == wallet.CONNECTED ? (
+                            <Button onClick={wallet.disconnect}>Disconnect</Button>
+                        ) : (
+                            <Button onClick={wallet.connect} isLoading={wallet.status == wallet.CONNECTING}>Connect Wallet</Button>
+                        )}
                     </VStack>
                     <VStack>
                         <IconButton

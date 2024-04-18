@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Providers } from './providers'
 import Template from "./template"
-import { Box, ChakraProvider } from "@chakra-ui/react"
+import { Box, ChakraProvider, Heading } from "@chakra-ui/react"
 import Navbar from "../components/Navbar"
 import Footer from "../components/Footer"
 
